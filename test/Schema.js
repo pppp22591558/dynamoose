@@ -642,7 +642,7 @@ describe('Schema tests', function (){
     }, {
       attributeFromDynamo: function(name, value, fallback) {
         if (name === 'owner') {
-          return 'Cat Lover: ' + value.S;
+          return 'Cat Lover: ' + value;
         }
         return fallback(value);
       }
@@ -713,7 +713,7 @@ describe('Schema tests', function (){
       owner: {
         type: String,
         fromDynamo: function(json) {
-          return 'Cat Lover: ' + json.S;
+          return 'Cat Lover: ' + json;
         }
       }
     });

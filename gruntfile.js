@@ -27,15 +27,15 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/*.js']
+        src: ['test/**/Scan.js']
       },
-      testCoverage: {
-        options: {
-          reporter: 'spec',
-          require: 'test/coverage/blanket'
-        },
-        src: ['test/**/*.js']
-      },
+      // testCoverage: {
+      //   options: {
+      //     reporter: 'spec',
+      //     require: 'test/coverage/blanket'
+      //   },
+      //   src: ['test/**/*.js']
+      // },
       coverage: {
         options: {
           reporter: 'html-cov',

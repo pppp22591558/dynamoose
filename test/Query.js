@@ -237,9 +237,7 @@ describe('Query', function (){
   it('Basic Query on SGI startAt key', function (done) {
     var Dog = dynamoose.model('Dog');
 
-    var startKey = { breed: { S: 'Jack Russell Terrier' },
-     ownerId: { N: '1' },
-     name: { S: 'Foxy Lady' } };
+    var startKey = { breed: 'Jack Russell Terrier', ownerId: 1, name: 'Foxy Lady' };
 
     Dog.query('breed').eq('Jack Russell Terrier').startAt(startKey).limit(1).exec(function (err, dogs) {
       should.not.exist(err);

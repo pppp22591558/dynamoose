@@ -900,13 +900,13 @@ describe('Model', function (){
             should.exist(data);
             data.id.should.eql(22);
             data.name.should.equal('Furr-nando');
-            data.myLittleUpdatedAt.getTime().should.be.above(data.myLittleCreatedAt.getTime());
+            data.myLittleUpdatedAt.should.be.above(data.myLittleCreatedAt);
             Cat4.get(22, function (err, furrnando) {
               should.not.exist(err);
               should.exist(furrnando);
               furrnando.id.should.eql(22);
               furrnando.name.should.equal('Furr-nando');
-              furrnando.myLittleUpdatedAt.getTime().should.be.above(furrnando.myLittleCreatedAt.getTime());
+              furrnando.myLittleUpdatedAt.should.be.above(furrnando.myLittleCreatedAt);
               done();
             });
           });
