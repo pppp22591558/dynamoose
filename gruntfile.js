@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/Scan.js']
+        src: ['test/**/Model.js']
       },
       // testCoverage: {
       //   options: {

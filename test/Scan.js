@@ -63,43 +63,29 @@ describe('Scan', function (){
       }
     }, { useDocumentTypes: true });
 
-
-    function addDogs (dogs) {
-      if(dogs.length <= 0) {
-        return done();
-      }
-      var dog = new Dog(dogs.pop());
-      dog.save(function (err) {
-        if (err) {
-          return done(err);
-        }
-        addDogs(dogs);
-      });
-    }
-
     var Dog = dynamoose.model('Dog', dogSchema);
 
-    addDogs([
-      {ownerId:1, name: 'Foxy Lady', breed: 'Jack Russell Terrier ', color: ['White', 'Brown', 'Black']},
+    Dog.batchPut([
+      {ownerId:1, name: 'Foxy Lady', breed: 'Jack Russell Terrier', color: ['White', 'Brown', 'Black']},
       {ownerId:2, name: 'Quincy', breed: 'Jack Russell Terrier', color: ['White', 'Brown']},
-      {ownerId:3, name: 'Princes', breed: 'Jack Russell Terrier', color: ['White', 'Brown']},
-      {ownerId:4, name: 'Toto', breed: 'Terrier', color: ['Brown']},
-      {ownerId:5, name: 'Odie', breed: 'Beagle', color: ['Tan'], cartoon: true},
-      {ownerId:6, name: 'Pluto', breed: 'unknown', color: ['Mustard'], cartoon: true},
-      {ownerId:7, name: 'Brian Griffin', breed: 'unknown', color: ['White']},
-      {ownerId:8, name: 'Scooby Doo', breed: 'Great Dane', cartoon: true},
-      {ownerId:9, name: 'Blue', breed: 'unknown', color: ['Blue'], cartoon: true},
-      {ownerId:10, name: 'Lady', breed: ' Cocker Spaniel', cartoon: true},
-      {ownerId:11, name: 'Copper', breed: 'Hound', cartoon: true},
-      {ownerId:12, name: 'Old Yeller', breed: 'unknown', color: ['Tan']},
-      {ownerId:13, name: 'Hooch', breed: 'Dogue de Bordeaux', color: ['Brown']},
-      {ownerId:14, name: 'Rin Tin Tin', breed: 'German Shepherd'},
-      {ownerId:15, name: 'Benji', breed: 'unknown'},
-      {ownerId:16, name: 'Wishbone', breed: 'Jack Russell Terrier', color: ['White'], details: { timeWakeUp: '6am', timeSleep: '8pm' }},
-      {ownerId:17, name: 'Marley', breed: 'Labrador Retriever', color: ['Yellow']},
-      {ownerId:18, name: 'Beethoven', breed: 'St. Bernard'},
-      {ownerId:19, name: 'Lassie', breed: 'Collie', color: ['tan', 'white']},
-      {ownerId:20, name: 'Snoopy', breed: 'Beagle', color: ['black', 'white'], cartoon: true, details: { timeWakeUp: '8am', timeSleep: '8pm' }}]);
+      {ownerId:2, name: 'Princes', breed: 'Jack Russell Terrier', color: ['White', 'Brown']},
+      {ownerId:3, name: 'Toto', breed: 'Terrier', color: ['Brown']},
+      {ownerId:4, name: 'Odie', breed: 'Beagle', color: ['Tan'], cartoon: true},
+      {ownerId:5, name: 'Pluto', breed: 'unknown', color: ['Mustard'], cartoon: true},
+      {ownerId:6, name: 'Brian Griffin', breed: 'unknown', color: ['White']},
+      {ownerId:7, name: 'Scooby Doo', breed: 'Great Dane', cartoon: true},
+      {ownerId:8, name: 'Blue', breed: 'unknown', color: ['Blue'], cartoon: true},
+      {ownerId:9, name: 'Lady', breed: ' Cocker Spaniel', cartoon: true},
+      {ownerId:10, name: 'Copper', breed: 'Hound', cartoon: true},
+      {ownerId:11, name: 'Old Yeller', breed: 'unknown', color: ['Tan']},
+      {ownerId:12, name: 'Hooch', breed: 'Dogue de Bordeaux', color: ['Brown']},
+      {ownerId:13, name: 'Rin Tin Tin', breed: 'German Shepherd'},
+      {ownerId:14, name: 'Benji', breed: 'unknown'},
+      {ownerId:15, name: 'Wishbone', breed: 'Jack Russell Terrier', color: ['White'], details: { timeWakeUp: '6am', timeSleep: '8pm' }},
+      {ownerId:16, name: 'Marley', breed: 'Labrador Retriever', color: ['Yellow']},
+      {ownerId:17, name: 'Beethoven', breed: 'St. Bernard'},
+      {ownerId:18, name: 'Lassie', breed: 'Collie', color: ['tan', 'white']},
+      {ownerId:19, name: 'Snoopy', breed: 'Beagle', color: ['black', 'white'], cartoon: true, details: { timeWakeUp: '8am', timeSleep: '8pm' }}], done);
 
   });
 
@@ -160,7 +146,7 @@ describe('Scan', function (){
   it('Scan on two attribute with filter object', function (done) {
     var Dog = dynamoose.model('Dog');
 
-    Dog.scan({'breed': {eq: 'Jack Russell Terrier'},'color':{contains:'black'}}, function (err, dogs) {
+    Dog.scan({'breed': {eq: 'Jack Russell Terrier'},'color':{contains:'Black'}}, function (err, dogs) {
       should.not.exist(err);
       dogs.length.should.eql(1);
       done();
@@ -170,7 +156,7 @@ describe('Scan', function (){
   it('Scan on two attribute', function (done) {
     var Dog = dynamoose.model('Dog');
 
-    Dog.scan('breed').eq(' Jack Russell Terrier').and().where('color').contains('black').exec(function (err, dogs) {
+    Dog.scan('breed').eq('Jack Russell Terrier').and().where('color').contains('Black').exec(function (err, dogs) {
       should.not.exist(err);
       dogs.length.should.eql(1);
       done();
@@ -180,7 +166,7 @@ describe('Scan', function (){
   it('Scan on two attribute and a not with filter object', function (done) {
     var Dog = dynamoose.model('Dog');
 
-    Dog.scan({'breed': {eq: 'Jack Russell Terrier'},'color':{not_contains:'black'}}, function (err, dogs) {
+    Dog.scan({'breed': {eq: 'Jack Russell Terrier'},'color':{not_contains:'Black'}}, function (err, dogs) {
       should.not.exist(err);
       dogs.length.should.eql(3);
       done();
@@ -190,7 +176,7 @@ describe('Scan', function (){
   it('Scan on two attribute and a not', function (done) {
     var Dog = dynamoose.model('Dog');
 
-    Dog.scan('breed').eq('Jack Russell Terrier').and().where('color').not().contains('black').exec(function (err, dogs) {
+    Dog.scan('breed').eq('Jack Russell Terrier').and().where('color').not().contains('Black').exec(function (err, dogs) {
       should.not.exist(err);
       dogs.length.should.eql(3);
       done();
@@ -572,7 +558,7 @@ describe('Scan', function (){
   it('Scan with startAt key', function (done) {
     var Dog = dynamoose.model('Dog');
 
-    var key = { ownerId: { N: '15' }, name: { S: 'Wishbone' } };
+    var key = { ownerId: 15, name: 'Wishbone' };
 
     Dog.scan().startAt(key).exec(function (err, dogs) {
       should.not.exist(err);

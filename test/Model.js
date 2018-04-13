@@ -208,7 +208,7 @@ describe('Model', function (){
     done();
   });
 
-  it('Create simple model', function (done) {
+  it.only('Create simple model', function (done) {
     this.timeout(12000);
 
 
@@ -272,7 +272,6 @@ describe('Model', function (){
       });
 
     kitten.save(done);
-
 
   });
 
